@@ -220,8 +220,17 @@ data "aws_iam_policy_document" "bucket" {
       identifiers = ["delivery.logs.amazonaws.com"]
     }
 
-    actions   = ["s3:PutObject"]
-    resources = ["${local.bucket_arn}/${var.log_prefix}/AWSLogs/${local.account_id}/*"]
+    actions = ["s3:PutObject"]
+
+    # Two shapes, because hive_compatible_partitions changes the delivery path.
+    # With it on, objects land under AWSLogs/aws-account-id=<id>/; with it off,
+    # under AWSLogs/<id>/. Granting only one means AWS silently appends its own
+    # statement to make delivery work, and the next terraform apply removes it
+    # again. Granting both keeps the policy stable across either setting.
+    resources = [
+      "${local.bucket_arn}/${var.log_prefix}/AWSLogs/${local.account_id}/*",
+      "${local.bucket_arn}/${var.log_prefix}/AWSLogs/aws-account-id=${local.account_id}/*",
+    ]
 
     condition {
       test     = "StringEquals"
