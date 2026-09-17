@@ -9,7 +9,7 @@ A flow log is three lines of Terraform. The reason this module exists is everyth
 ```hcl
 module "flow_logs" {
   source  = "fizz/vpc-flow-logs/aws"
-  version = "~> 0.1"
+  version = "~> 0.2"
 
   name        = "prod"
   vpc_id      = aws_vpc.main.id
@@ -24,7 +24,7 @@ To CloudWatch Logs instead, which also creates the log group and the delivery ro
 ```hcl
 module "flow_logs" {
   source  = "fizz/vpc-flow-logs/aws"
-  version = "~> 0.1"
+  version = "~> 0.2"
 
   name             = "cmmc"
   vpc_id           = aws_vpc.main.id
@@ -93,9 +93,7 @@ Flow log volume scales with **flow count, not bytes** — one record per 5-tuple
 | | Version |
 |---|---|
 | terraform | >= 1.0 |
-| aws provider | >= 6.0 |
-
-The 6.0 floor is for `data.aws_region.current.region`; `.name` is deprecated.
+| aws provider | >= 5.0 |
 
 ## License
 
