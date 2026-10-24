@@ -15,7 +15,7 @@ locals {
   # .name over .region deliberately. .region needs AWS provider 6.x, and
   # pinning this module to a major provider version for one string locks out
   # every caller still on 5.x. .name works in both and only warns on 6.
-  region = data.aws_region.current.name
+  region = data.aws_region.current.region
 
   # Exactly one target. aws_flow_log accepts one of these, and passing none
   # produces an API error at apply time rather than a plan-time complaint.

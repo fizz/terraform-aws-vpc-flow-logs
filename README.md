@@ -93,7 +93,7 @@ Flow log volume scales with **flow count, not bytes** — one record per 5-tuple
 | | Version |
 |---|---|
 | terraform | >= 1.0 |
-| aws provider | >= 5.0 |
+| aws provider | >= 6.0 |
 
 ## License
 
